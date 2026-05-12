@@ -1,39 +1,4 @@
-"use client"
-
-import { MessageCircle, Bot, ArrowRight, Flame, Check } from "lucide-react"
-import { trackLeadEvent } from "@/components/meta-pixel"
-
-const WHATSAPP_LINK = "https://wa.link/chejub"
-
-// Generate unique event ID for deduplication
-function generateEventId() {
-  return `lead_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`
-}
-
-// Handle CTA click with Meta tracking
-async function handleCtaClick() {
-  const eventId = generateEventId()
-  const eventSourceUrl = typeof window !== "undefined" ? window.location.href : ""
-
-  // Track browser-side Lead event with event_id for deduplication
-  trackLeadEvent(eventId)
-
-  // Send server-side CAPI event
-  try {
-    await fetch("/api/meta-lead", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        event_id: eventId,
-        event_source_url: eventSourceUrl,
-      }),
-    })
-  } catch (error) {
-    console.error("Failed to send CAPI event:", error)
-  }
-}
+import { CtaButtons } from "./cta-buttons"
 
 export function HeroSection() {
   return (
@@ -41,8 +6,10 @@ export function HeroSection() {
       {/* Header */}
       <header className="flex items-center justify-between px-4 sm:px-6 py-4">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-[#25D366] rounded-lg flex items-center justify-center flex-shrink-0">
-            <MessageCircle className="w-5 h-5 text-black" />
+          <div className="w-8 h-8 bg-[#25D366] rounded-lg flex items-center justify-center shrink-0">
+            <svg className="w-5 h-5 text-black" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+            </svg>
           </div>
           <span className="text-white font-semibold text-lg">CapitalBTC</span>
         </div>
@@ -63,7 +30,9 @@ export function HeroSection() {
         <div className="w-full max-w-3xl mx-auto text-center">
           {/* Urgency badge */}
           <div className="inline-flex items-center gap-2 bg-[#25D366]/20 border border-[#25D366]/50 rounded-full px-4 sm:px-5 py-2 sm:py-2.5 mb-6 sm:mb-8">
-            <Flame className="w-4 h-4 text-[#25D366] flex-shrink-0" />
+            <svg className="w-4 h-4 text-[#25D366] shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
+            </svg>
             <span className="text-[#25D366] font-semibold text-xs sm:text-sm tracking-wide">
               SOLO 23 CUPOS - CERRAMOS HOY
             </span>
@@ -98,43 +67,27 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col gap-3 max-w-md mx-auto mb-6 px-2">
-            <a
-              href={WHATSAPP_LINK}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={handleCtaClick}
-              className="flex items-center justify-center gap-2 sm:gap-3 bg-[#25D366] hover:bg-[#20bd5a] text-black font-bold text-base sm:text-lg py-4 px-4 sm:px-8 rounded-xl transition-all duration-300 shadow-[0_0_30px_rgba(37,211,102,0.3)] hover:shadow-[0_0_40px_rgba(37,211,102,0.5)] w-full"
-            >
-              <MessageCircle className="w-5 h-5 flex-shrink-0" />
-              <span className="whitespace-nowrap">ACCEDER AL CANAL GRATIS</span>
-              <ArrowRight className="w-5 h-5 flex-shrink-0" />
-            </a>
-            <a
-              href={WHATSAPP_LINK}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={handleCtaClick}
-              className="flex items-center justify-center gap-2 sm:gap-3 bg-[#111111] hover:bg-[#1a1a1a] text-white font-medium text-base sm:text-lg py-4 px-4 sm:px-8 rounded-xl border border-[#333333] transition-all duration-300 w-full"
-            >
-              <Bot className="w-5 h-5 flex-shrink-0" />
-              <span>Quiero mi Robot de Trading</span>
-            </a>
-          </div>
+          {/* CTA Buttons - Client Component */}
+          <CtaButtons />
 
           {/* Trust indicators */}
           <div className="flex flex-wrap justify-center gap-4 sm:gap-6 text-sm text-gray-500 mb-8 px-2">
             <span className="flex items-center gap-2">
-              <Check className="w-4 h-4 text-[#25D366] flex-shrink-0" />
+              <svg className="w-4 h-4 text-[#25D366] shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/>
+              </svg>
               100% Gratis
             </span>
             <span className="flex items-center gap-2">
-              <Check className="w-4 h-4 text-[#25D366] flex-shrink-0" />
+              <svg className="w-4 h-4 text-[#25D366] shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/>
+              </svg>
               Sin Tarjeta
             </span>
             <span className="flex items-center gap-2">
-              <Check className="w-4 h-4 text-[#25D366] flex-shrink-0" />
+              <svg className="w-4 h-4 text-[#25D366] shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/>
+              </svg>
               Acceso Inmediato
             </span>
           </div>
@@ -162,7 +115,7 @@ export function HeroSection() {
 
           {/* Live indicator */}
           <div className="flex items-center justify-center gap-2 text-red-400 px-4">
-            <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse flex-shrink-0" />
+            <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse shrink-0" />
             <span className="text-xs sm:text-sm text-center">
               El robot esta operando AHORA. No esperes a que sea tarde.
             </span>
