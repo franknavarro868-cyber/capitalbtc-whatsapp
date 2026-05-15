@@ -1,9 +1,9 @@
 "use client"
 
-import { MessageCircle, Bot, ArrowRight, Flame, Check } from "lucide-react"
+import { MessageCircle, Bot, Flame, Check } from "lucide-react"
 import { trackLeadEvent } from "@/components/meta-pixel"
 
-const WHATSAPP_LINK = "https://wa.link/chejub"
+const WHATSAPP_LINK = "https://chat.whatsapp.com/Ge49RMzcOMkEXbvSBNgbzc?s=cl&p=a&mlu=3"
 
 // Generate unique event ID for deduplication
 function generateEventId() {
@@ -105,11 +105,10 @@ export function HeroSection() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={handleCtaClick}
-              className="flex items-center justify-center gap-2 sm:gap-3 bg-[#25D366] hover:bg-[#20bd5a] text-black font-bold text-base sm:text-lg py-4 px-4 sm:px-8 rounded-xl transition-all duration-300 shadow-[0_0_30px_rgba(37,211,102,0.3)] hover:shadow-[0_0_40px_rgba(37,211,102,0.5)] w-full"
+              className="flex items-center justify-center gap-2 sm:gap-3 bg-[#25D366] hover:bg-[#20bd5a] text-black font-bold text-base sm:text-lg py-4 px-4 sm:px-8 rounded-xl transition-all duration-300 shadow-[0_0_30px_rgba(37,211,102,0.3)] hover:shadow-[0_0_40px_rgba(37,211,102,0.5)] w-full text-center"
             >
               <MessageCircle className="w-5 h-5 flex-shrink-0" />
-              <span className="whitespace-nowrap">ACCEDER AL CANAL GRATIS</span>
-              <ArrowRight className="w-5 h-5 flex-shrink-0" />
+              <span className="text-center leading-tight">Acceder a nuestro grupo de WhatsApp y recibe Senales IA Gratuitas</span>
             </a>
             <a
               href={WHATSAPP_LINK}
